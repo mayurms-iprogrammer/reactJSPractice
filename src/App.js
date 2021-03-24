@@ -12,9 +12,9 @@ class App extends React.Component {
     this.state = {
       isVisible: true,
       person: [
-        { name: "aniket", age: "23" },
-        { name: "Tushar", age: "32" },
-        { name: "Shubham", age: "36" }
+        { id: 1, name: "aniket", age: "23" },
+        { id: 2, name: "Tushar", age: "32" },
+        { id: 3, name: "Shubham", age: "36" }
 
       ]
 
@@ -31,8 +31,11 @@ class App extends React.Component {
   }
 
 
-  changedHandler = (value) => {
-
+  changedHandler = (value, id) => {
+    let personIndex = this.state.person.findIndex(p => {
+      return p.id == id;
+    })
+    console.log(personIndex, "Person index");
     this.setState({
       person: [
         { name: "Ritesh", age: "23" },
@@ -43,7 +46,12 @@ class App extends React.Component {
     });
   }
   togglePersonHandler = () => {
-   this.setState({isVisible:!this.state.isVisible});
+    this.setState({ isVisible: !this.state.isVisible });
+  }
+  deletePersonHAndler = (itemIndex) => {
+    let data = this.state.person;
+    data.splice(itemIndex, 1);
+    this.setState({ person: data });
   }
   render() {
     return (
@@ -52,36 +60,22 @@ class App extends React.Component {
         <button
           onClick={this.togglePersonHandler}
         >Switch</button>
-        {this.state.isVisible===false?null:  <div>
-          <Dashboard
-            name={this.state.person[0].name}
-            age={this.state.person[0].age}
-
-          />
-          <Dashboard
-            name={this.state.person[1].name}
-            age={this.state.person[1].age}
-            click={this.switchNameHandler.bind(this)}
-          />
-
-
-          <Dashboard
-            changedHandler={this.changedHandler.bind(this)}
-            name={this.state.person[2].name}
-            age={this.state.person[2].age}> my hobbies are : cricket
-
-          </Dashboard>
-
-
-
-
-
-        </div>
+        {
+          this.state.person.map((person, index) => {
+            return <Dashboard
+              name={person.name}
+              age={person.age}
+              key={index}
+              changedHandler={(value) => {
+                console.log(value, person.id, "info");
+                this.changedHandler(value, person.id)
+              }}
+            // click={this.deletePersonHAndler.bind(this,index )}
+            />
+          })
 
         }
-        {this.state.person.map(person=>{
-          return <h5>{person.name}</h5>
-        })}
+
       </div>
     )
   }
