@@ -1,0 +1,10 @@
+.conatiner{
+    width: 60%;
+    margin: 10px;
+    border: 1px solid brown;
+    box-shadow: 0 2px 3px grey;
+    padding: 16px;
+}
+.app-container{
+    justify-content: center;
+}
