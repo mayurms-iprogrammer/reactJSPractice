@@ -1,14 +1,22 @@
+import Radium from "radium";
 import React, { useState } from "react";
 import './Dashboard.css'
 
 const Dashboard = (props) => {
     const [name, setName] = useState("")
+    const style={
+        '@media ( min-width:550px)':{
+                width:'500px'
+                
+        }
+    }
     return (
-        <div className="conatiner">
+      
+        <div className="conatiner"  style={style}>
             <h1
-                // onClick={() => { props.click() }}
+                onClick={() => { props.click() }}
             >hi,{props.name} you are {props.age} years old
-                </h1>
+                </h1> 
             <input
                 value={props.name}
                 type="text"
@@ -22,7 +30,8 @@ const Dashboard = (props) => {
 
 
         </div>
+       
     )
 }
 
-export default Dashboard;
+export default Radium(Dashboard);
